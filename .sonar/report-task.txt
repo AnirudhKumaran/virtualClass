@@ -1,0 +1,6 @@
+projectKey=VirtualClass
+serverUrl=http://localhost:8081
+serverVersion=7.1.0.11001
+dashboardUrl=http://localhost:8081/dashboard/index/VirtualClass
+ceTaskId=AXjPfrErgNNvThy2AbYP
+ceTaskUrl=http://localhost:8081/api/ce/task?id=AXjPfrErgNNvThy2AbYP

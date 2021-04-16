@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Test Page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="./scripts/studentClass.js"></script>
+<style>
+	.icon{
+		width:30px;
+		height:30px;
+	}
+	
+	.commentBox{
+		width:auto;
+		background-color:lightblue;
+		padding: 2px 2px;
+		margin: 2px 0px;
+	}
+	
+	.commentBox #uname{
+		font-size:16px;
+		height:20px;
+		font-weight:bold;
+		margin: 2px 0px;
+	}
+	
+	.commentBox #reply,#datime{
+		font-size:12px;
+		margin: 2px 0px;
+	}
+	
+	#comments{
+		height:200px;
+		overflow-y:scroll;
+		display:block;
+	}
+
+	.icon-bar {
+	  position: fixed;
+	  top: 50%;
+	  -webkit-transform: translateY(-50%);
+	  -ms-transform: translateY(-50%);
+	  transform: translateY(-50%);
+	}
+	
+	/* Style the icon bar links */
+	.icon-bar a,#myBtn {
+	  display: block;
+	  text-align: center;
+	  padding: 5px;
+	  transition: all 0.3s ease;
+	  color: white;
+	  font-size: 20px;
+	  pointer-events: auto;  
+   		cursor: pointer;
+	}
+	
+	/* Style the social media icons with color, if you want */
+	.icon-bar a:hover {
+	  background-color: #000;
+	}
+	
+	.facebook {
+	  background: #3B5998;
+	  color: white;
+	}
+	
+	.twitter {
+	  background: #55ACEE;
+	  color: white;
+	}
+	
+	.google {
+	  background: #dd4b39;
+	  color: white;
+	}
+	
+	.linkedin {
+	  background: #007bb5;
+	  color: white;
+	}
+	
+	.youtube {
+	  background: #bb0000;
+	  color: white;
+	  }
+
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="icon-bar">
+			<a class="facebook" onclick="loadAll()"><img class="icon" alt="" src="https://static.thenounproject.com/png/65965-200.png" /></a>
+			<a class="google" onclick="loadPost()"><img class="icon" alt="" src="./images/doubts_icon.png" /></a>
+			<a class="twitter" onclick="loadDoubts()"><img class="icon" alt="" src="./images/post_icon.png" /></a>
+			<a class="facebook" onclick="loadVideos()"><img class="icon" alt="" src="./images/video_icon.png" /></a>
+		</div>
+		<div class="justify-content-center px-5 py-2" id="allContents">
+			
+		</div>
+	</div>
+</body>
+<script>
+	/*var contentHolder = document.getElementById("allContents");
+	renderUsers();
+	renderPosts();
+	renderVideos();
+	$.get("", function(data, status){
+	    //console.log("Data: " + data + "\nStatus: " + status);
+	    for(var i=0;i<data.length;i++){
+	    	const obj = data[i];
+	    	newArray.push(obj);
+	    }
+	    	
+	  });
+		2 - Post
+		3 - Videos
+		4 - Doubts
+		
+		for(var i=0;i<totalArray.length;i++){
+			for(var j=0;j<totalArray.length;j++){
+				if(i!=j){
+					let idate = totalArray[i][getDateName(totalArray[i]["gtype"])];
+					let jdate = totalArray[j][getDateName(totalArray[j]["gtype"])];
+					console.log("idate : ",idate,'jdate',jdate);
+				}
+			}
+		}
+		
+		function getDateName(ftype){
+			
+			if(ftype=="P")
+				return "pdt";
+			
+			if(ftype=="V")
+				return "vdt";
+			
+			if(ftype=="D")
+				return "ddt";
+			
+		}
+	*/
+	var postsArray = new Array();
+	var videosArray = new Array();
+	var doubtsArray = new Array();
+		
+	function getMethod(pUrl,storeArray){
+		
+		let data = $.parseJSON($.ajax({
+	        url:  pUrl,
+	        dataType: "json", 
+	        async: false
+	    }).responseText);
+		
+		if(storeArray==2){
+			postsArray = new Array();
+			postsArray = [...data]; 
+		}
+		
+		if(storeArray==3){
+			videosArray = new Array();
+			videosArray = [...data]; 
+		}
+		
+		if(storeArray==4){
+			doubtsArray = new Array();
+			doubtsArray = [...data]; 
+		}
+		
+	}
+	
+	getMethod('./selectquery?rnum=2&&cid=CID-000001',2);
+	getMethod('./selectquery?rnum=3&&cid=CID-000001',3);
+	getMethod('./selectquery?rnum=4&&cid=CID-000001',4);
+	
+	console.log("posts : ",postsArray);
+	console.log("videos : ",videosArray);
+	console.log("doubts : ",doubtsArray);
+	
+	var totalArray = new Array();
+	
+	totalArray = totalArray.concat(postsArray,videosArray,doubtsArray);	
+	totalArray.sort(function(a, b){return new Date(b["pdt"]) - new Date(a["pdt"]) });
+	console.log("Sorted Array : ",totalArray);
+	
+	//console.log("After Sorting : ",totalArray);
+</script>
+</html>
